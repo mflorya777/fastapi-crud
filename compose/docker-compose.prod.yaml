@@ -1,0 +1,23 @@
+services:
+  crud-fastapi:
+    build:
+      context: ..
+      dockerfile: compose/Dockerfile
+      target: production
+    image: ${IMAGE_NAME}
+    hostname: crud-fastapi-${ENV}
+    container_name: crud-fastapi-${ENV}
+    ports:
+      - "8081:8081"
+    networks:
+      - vps-network
+    env_file:
+      - ../prod.env
+    volumes:
+      - ${PWD}:/opt/app
+      - ${PWD}/files_storage_directory:/opt/crud-fastapi/files_storage_directory
+
+networks:
+  vps-network:
+    name: vps-network
+    driver: bridge
